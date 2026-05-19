@@ -1,0 +1,56 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  id-token: write
+  attestations: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install --package-lock=false
+
+      - name: Build
+        run: npm run build
+
+      - name: Generate attestation for main.js
+        uses: actions/attest@v4
+        with:
+          subject-path: main.js
+
+      - name: Generate attestation for manifest.json
+        uses: actions/attest@v4
+        with:
+          subject-path: manifest.json
+
+      - name: Generate attestation for styles.css
+        uses: actions/attest@v4
+        with:
+          subject-path: styles.css
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" \
+            main.js manifest.json styles.css \
+            --repo "${GITHUB_REPOSITORY}" \
+            --title "Vault Palette ${GITHUB_REF_NAME}" \
+            --notes "Release ${GITHUB_REF_NAME}."

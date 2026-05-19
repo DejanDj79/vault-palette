@@ -1,7 +1,7 @@
 {
 	"name": "vault-palette",
-	"version": "0.1.1",
-	"description": "Customize folder, file, and tag colors in Obsidian.",
+	"version": "0.1.2",
+	"description": "Customize folder, file, and tag colors.",
 	"main": "main.js",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",
