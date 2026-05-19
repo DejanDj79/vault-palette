@@ -16,6 +16,22 @@ export class EventManager {
                 this.handleFileMenu(menu, file);
             })
         );
+
+        this.plugin.registerEvent(
+            this.app.vault.on('create', () => this.plugin.updateStyles())
+        );
+        this.plugin.registerEvent(
+            this.app.vault.on('delete', () => this.plugin.updateStyles())
+        );
+        this.plugin.registerEvent(
+            this.app.vault.on('rename', () => this.plugin.updateStyles())
+        );
+        this.plugin.registerEvent(
+            this.app.metadataCache.on('changed', () => this.plugin.updateStyles())
+        );
+        this.plugin.registerEvent(
+            this.app.metadataCache.on('deleted', () => this.plugin.updateStyles())
+        );
     }
 
     private handleFileMenu(menu: Menu, file: TAbstractFile) {

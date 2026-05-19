@@ -1,11 +1,11 @@
 {
-	"id": "color-folders-files",
-	"name": "Color Folders and Files",
-	"version": "1.4.1",
+	"id": "vault-palette",
+	"name": "Vault Palette",
+	"version": "0.1.0",
 	"minAppVersion": "1.4.1",
-	"description": "Customize the appearance of folders and files in the file explorer.",
-	"author": "Mithadon",
-    "authorUrl": "https://github.com/Mithadon",
-    "fundingUrl": "https://ko-fi.com/mithadon",
+	"description": "Customize folder, file, and tag colors in Obsidian.",
+	"author": "DejanDj79",
+	"authorUrl": "https://github.com/DejanDj79",
+	"fundingUrl": "https://patreon.com/dejandj79",
 	"isDesktopOnly": false
 }

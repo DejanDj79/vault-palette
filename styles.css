@@ -1,8 +1,8 @@
 /* Modal styles */
 .modal.color-folders-files-modal {
-    width: 350px !important;
-    max-width: 350px !important;
-    max-height: 80vh !important;
+    width: 480px !important;
+    max-width: calc(100vw - 32px) !important;
+    max-height: 92vh !important;
 }
 
 /* Remove ALL Obsidian's default modal shadows */
@@ -185,6 +185,88 @@
 }
 
 /* Settings tab preset styles */
+.cff-settings-tabs {
+    display: flex;
+    gap: 6px;
+    margin: 0 0 18px;
+    border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.cff-settings-tab {
+    padding: 6px 10px;
+    border: none;
+    border-radius: var(--radius-s) var(--radius-s) 0 0;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+}
+
+.cff-settings-tab:hover {
+    color: var(--text-normal);
+    background-color: var(--background-modifier-hover);
+}
+
+.cff-settings-tab.is-active {
+    color: var(--text-normal);
+    background-color: var(--background-secondary);
+}
+
+.cff-tag-preview {
+    display: inline-block;
+    margin: 6px 0 14px;
+    padding: 2px 8px;
+    border-radius: var(--radius-s);
+    text-decoration: none;
+}
+
+.cff-preset-save {
+    margin: 10px 0 18px;
+    padding: 10px 12px !important;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: var(--radius-s);
+    background-color: var(--background-secondary);
+}
+
+.cff-preset-save .setting-item-info {
+    min-width: 120px;
+}
+
+.cff-preset-save .setting-item-control {
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.cff-preset-save input[type="text"] {
+    min-width: 180px;
+}
+
+.tag-pane-tag[data-cff-tag] .tree-item-inner,
+.tag-pane-tag .tree-item-inner[data-cff-tag] {
+    display: inline-flex;
+    flex: 0 1 auto;
+    width: fit-content;
+    max-width: 100%;
+    padding: 0 6px;
+    border-radius: var(--radius-s);
+}
+
+.cm-hashtag[data-cff-tag],
+.multi-select-pill[data-cff-tag],
+.multi-select-pill-content[data-cff-tag] {
+    border-radius: var(--tag-radius, var(--pill-radius, var(--radius-s)));
+}
+
+.cm-hashtag-begin[data-cff-tag] {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.cm-hashtag-end[data-cff-tag] {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
 .presets-container {
     display: flex;
     flex-direction: column;

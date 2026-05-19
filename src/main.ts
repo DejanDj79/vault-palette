@@ -14,7 +14,7 @@ export default class ColorFolderPlugin extends Plugin implements ColorFolderPlug
         await this.loadSettings();
         
         // Initialize managers
-        this.styleManager = new StyleManager();
+        this.styleManager = new StyleManager(this.app);
         this.eventManager = new EventManager(this.app, this);
         
         // Register events
@@ -42,7 +42,7 @@ export default class ColorFolderPlugin extends Plugin implements ColorFolderPlug
     }
 
     updateStyles() {
-        this.styleManager.updateStyles(this.settings.styles);
+        this.styleManager.updateStyles(this.settings);
     }
 
     async confirmOverwritePreset(name: string): Promise<boolean> {
