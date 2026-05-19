@@ -543,18 +543,29 @@ export class ColorSettingsModal extends Modal {
         if (style.rainbowFileNames && targets.files) {
             delete childFileStyle.textColor;
         }
-        const pathPrefix = `${this.filePath}/`;
+        this.applyStyleToFolderChildren(targetFile, targets, childFolderStyle, childFileStyle, overwriteExisting);
+    }
 
-        this.app.vault.getAllLoadedFiles().forEach(file => {
-            if (!file.path.startsWith(pathPrefix)) return;
-            if (!overwriteExisting && this.plugin.settings.styles[file.path]) return;
+    private applyStyleToFolderChildren(
+        folder: TFolder,
+        targets: { subfolders: boolean; files: boolean },
+        childFolderStyle: StyleSettings,
+        childFileStyle: StyleSettings,
+        overwriteExisting: boolean
+    ) {
+        folder.children.forEach(child => {
+            const hasExistingStyle = Boolean(this.plugin.settings.styles[child.path]);
 
-            if (targets.subfolders && file instanceof TFolder) {
-                this.plugin.settings.styles[file.path] = { ...childFolderStyle };
+            if (targets.subfolders && child instanceof TFolder && (overwriteExisting || !hasExistingStyle)) {
+                this.plugin.settings.styles[child.path] = { ...childFolderStyle };
             }
 
-            if (targets.files && file instanceof TFile) {
-                this.plugin.settings.styles[file.path] = { ...childFileStyle };
+            if (targets.files && child instanceof TFile && (overwriteExisting || !hasExistingStyle)) {
+                this.plugin.settings.styles[child.path] = { ...childFileStyle };
+            }
+
+            if (child instanceof TFolder) {
+                this.applyStyleToFolderChildren(child, targets, childFolderStyle, childFileStyle, overwriteExisting);
             }
         });
     }

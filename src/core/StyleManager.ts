@@ -153,8 +153,7 @@ export class StyleManager {
             return [];
         }
 
-        return this.app.vault.getFiles()
-            .filter(file => this.isRainbowTarget(folderPath, file, Boolean(style.applyToFiles)))
+        return this.getFilesInFolder(folder, Boolean(style.applyToFiles))
             .sort((a, b) => a.path.localeCompare(b.path))
             .map(file => {
                 const escapedPath = CSS.escape(file.path);
@@ -169,17 +168,21 @@ export class StyleManager {
             });
     }
 
-    private isRainbowTarget(folderPath: string, file: TFile, includeNestedFiles: boolean): boolean {
-        const pathPrefix = `${folderPath}/`;
-        if (!file.path.startsWith(pathPrefix)) {
-            return false;
-        }
+    private getFilesInFolder(folder: TFolder, includeNestedFiles: boolean): TFile[] {
+        const files: TFile[] = [];
 
-        if (includeNestedFiles) {
-            return true;
-        }
+        folder.children.forEach(child => {
+            if (child instanceof TFile) {
+                files.push(child);
+                return;
+            }
 
-        return !file.path.slice(pathPrefix.length).includes('/');
+            if (includeNestedFiles && child instanceof TFolder) {
+                files.push(...this.getFilesInFolder(child, includeNestedFiles));
+            }
+        });
+
+        return files;
     }
 
     private getRainbowColor(seed: string): string {

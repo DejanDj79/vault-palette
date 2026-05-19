@@ -1,4 +1,4 @@
-import { App, getAllTags, Plugin, PluginSettingTab, Setting, Notice, TextComponent, ColorComponent } from 'obsidian';
+import { App, Plugin, PluginSettingTab, Setting, Notice, TextComponent, ColorComponent } from 'obsidian';
 import { StyleSettings, ColorFolderPluginInterface } from '../types';
 import { DEFAULT_STYLE } from '../constants';
 import { getChildFileTextStyle, getStyleBackgroundColor, getStyleBorderColor, getStyleHoverOpacity, isBackgroundEnabled, isBorderEnabled } from '../utils/styleUtils';
@@ -748,13 +748,10 @@ export class ColorSettingsTab extends PluginSettingTab {
 
     private getDetectedTags(): string[] {
         const tags = new Set<string>();
+        const metadataTags = (this.app.metadataCache as { getTags?: () => Record<string, number> }).getTags?.() || {};
 
-        this.app.vault.getMarkdownFiles().forEach(file => {
-            const cache = this.app.metadataCache.getFileCache(file);
-            if (!cache) return;
-
-            getAllTags(cache)?.forEach(tag => tags.add(this.normalizeTag(tag)));
-        });
+        Object.keys(metadataTags)
+            .forEach(tag => tags.add(this.normalizeTag(tag)));
 
         Object.keys(this.plugin.settings.tagBackgroundColors || {})
             .forEach(tag => tags.add(this.normalizeTag(tag)));
