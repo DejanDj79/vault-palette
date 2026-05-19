@@ -3,7 +3,7 @@
 	"name": "Vault Palette",
 	"version": "0.1.0",
 	"minAppVersion": "1.4.1",
-	"description": "Customize folder, file, and tag colors in Obsidian.",
+	"description": "Customize folder, file, and tag colors.",
 	"author": "DejanDj79",
 	"authorUrl": "https://github.com/DejanDj79",
 	"fundingUrl": "https://patreon.com/dejandj79",
